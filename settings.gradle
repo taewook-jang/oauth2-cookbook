@@ -1,8 +1,7 @@
 rootProject.name = 'minu-arms'
 
-include 'arms-commons',
-        'arms-access-control',
-        'arms-administration',
-        'msa-api-client',
-        'msa-api-gateway',
-        'msa-service-discovery'
+include 'chap01:client-implicit',
+        'chap01:simplemvc',
+        'chap02:auth-code-server',
+        'chap02:implicit-server',
+        'chap02:client-credentials-server'
