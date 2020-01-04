@@ -1,0 +1,8 @@
+rootProject.name = 'minu-arms'
+
+include 'arms-commons',
+        'arms-access-control',
+        'arms-administration',
+        'msa-api-client',
+        'msa-api-gateway',
+        'msa-service-discovery'

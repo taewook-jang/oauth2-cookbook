@@ -1,0 +1,139 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+/*
+ ##################################################
+ #
+ # [ MinU-AMS ] gradle build
+ #
+ ##################################################
+ */
+
+/*
+  ------------------------------
+     build-script
+  ------------------------------
+*/
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'http://repo.spring.io' }
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.2.2.RELEASE'
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE'
+        classpath 'gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10'
+        classpath 'de.aaschmid:gradle-cpd-plugin:1.1'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:1.8.0"
+    }
+}
+
+/*
+  ------------------------------
+     all-projects :: root 프로젝트를 제외하고 싶다면 subprojects로 등록
+  ------------------------------
+*/
+allprojects {
+    /*
+      ------------------------------
+         plugins
+      ------------------------------
+    */
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+    apply plugin: 'org.asciidoctor.convert'
+    apply plugin: "com.google.cloud.tools.jib"
+
+    /*
+      ------------------------------
+         base config
+      ------------------------------
+    */
+
+    /* _____ idea config _____ */
+    idea {
+        module {
+            outputDir file('build/classes/main')
+            testOutputDir file('build/classes/test')
+        }
+    }
+
+    /* _____ repo config _____ */
+    repositories {
+        maven {
+            url "${NEXUS_URL}/repository/maven-public/"
+            credentials {
+                username NEXUS_ID
+                password NEXUS_PASSWORD
+            }
+        }
+        mavenCentral()
+        jcenter()
+        maven { url "http://jasperreports.sourceforge.net/maven2/" }
+        maven { url "http://www.egovframe.go.kr/maven/" }
+    }
+
+    /* _____ compiler config _____ */
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    compileJava.dependsOn(processResources)
+
+    compileGroovy {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    /* _____ encoding config _____ */
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+    [compileGroovy, compileTestGroovy]*.options*.encoding = 'UTF-8'
+    [compileGroovy, compileTestGroovy]*.groovyOptions*.encoding = 'UTF-8'
+
+    /* _____ configurations config _____ */
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    /* _____ spring-cloud dependency-management config _____ */
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR1"
+        }
+    }
+
+    /*
+      ------------------------------
+         processResources
+      ------------------------------
+    */
+    processResources {
+        with copySpec {
+            from 'src/main/resources'
+            include '**/banner.txt', '**/application.yml'
+            filteringCharset = 'UTF-8'
+            project.properties.findAll().each {
+                prop ->
+                    if (prop.value != null) {
+                        filter(ReplaceTokens, tokens: [(prop.key): prop.value])
+                        filter(ReplaceTokens, tokens: [ ('project.' + prop.key): prop.value])
+                    }
+            }
+        }
+    }
+
+    compileJava.dependsOn(processResources)
+
+}
