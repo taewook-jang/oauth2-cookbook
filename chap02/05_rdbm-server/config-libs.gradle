@@ -1,0 +1,68 @@
+/*
+ ##################################################
+ #
+ # [ minu-arms ] gradle config-lib
+ #
+ ##################################################
+ */
+
+dependencies {
+
+    /*
+    ------------------------------
+        implementation
+    ------------------------------
+    */
+
+    // spring-boot-starter
+    implementation("org.springframework.boot:spring-boot-starter-web") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure'
+
+    // spring boot 1.5.x 버전과의 프로퍼티 호환성을 위한 라이브러리. (호환되지 않거나 사용되지 않는 프로퍼티는 콘솔창에 로깅됨)
+    implementation 'org.springframework.boot:spring-boot-properties-migrator'
+
+    // mariadb
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.5.2'
+
+    /*
+    ------------------------------
+        compileOnly
+    ------------------------------
+    */
+    compileOnly 'org.projectlombok:lombok'
+
+    /*
+    ------------------------------
+        testImplementation
+    ------------------------------
+    */
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    /*
+    ------------------------------
+        annotationProcessor
+    ------------------------------
+    */
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
+
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
+
+    /*
+    ------------------------------
+        developmentOnly
+    ------------------------------
+    */
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+
+
+

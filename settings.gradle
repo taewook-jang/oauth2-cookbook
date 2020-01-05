@@ -1,7 +1,10 @@
-rootProject.name = 'minu-arms'
+rootProject.name = 'oauth2-cookbook'
 
 include 'chap01:client-implicit',
-        'chap01:simplemvc',
-        'chap02:auth-code-server',
-        'chap02:implicit-server',
-        'chap02:client-credentials-server'
+        'chap02:01_auth-code-server',
+        'chap02:02_implicit-server',
+        'chap02:03_client-credentials-server',
+        'chap02:04_refresh-server',
+        'chap02:05_rdbm-server',
+        'chap02:06_redis-server',
+        'chap02:07_oauth2provider'
