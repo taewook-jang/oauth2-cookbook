@@ -33,8 +33,8 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
             .withClient("clientapp")
             .secret("{noop}123456")
             .authorizedGrantTypes(
-                    "authorization_code",
-                    "password",
+                    //"authorization_code",
+                    "client_credentials",
                     "refresh_token")
             .accessTokenValiditySeconds(120)
             .refreshTokenValiditySeconds(3000)

@@ -1,0 +1,14 @@
+server:
+  port: 8207
+
+spring:
+  thymeleaf.cache: false
+  datasource:
+    url: jdbc:mysql://1.217.118.166:3306/oauth
+    username: dandi
+    password: dandi12#$
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDBDialect
+      hbm2ddl.auto: validate

@@ -5,6 +5,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.annotation.Resource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -14,11 +18,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin();
     }*/
 
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("dandi").password("{noop}dandi").roles("USER")
+                .withUser("dandi").password(passwordEncoder.encode("dandi")).roles("USER")
                 .and()
                 .withUser("admin").password("{noop}password").roles("ADMIN");
 
@@ -28,12 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    /*@Bean
-    public PasswordEncoder passwordEncoder() {
-        // the size can be between 4 to 31
-        return new BCryptPasswordEncoder(4);
-    }*/
 
 }
 

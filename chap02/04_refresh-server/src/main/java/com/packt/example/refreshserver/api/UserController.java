@@ -11,12 +11,15 @@ public class UserController {
 
     @RequestMapping("/api/profile")
     public ResponseEntity<UserProfile> hello() {
-        User user = (User) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        String email = user.getUsername() + "@mailinator.com";
+        /*User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();*/
+
+        String userName = "tw.jang";
+
+        String email = userName + "@mailinator.com";
 
         UserProfile profile = new UserProfile();
-        profile.setName(user.getUsername());
+        profile.setName(userName);
         profile.setEmail(email);
 
         return ResponseEntity.ok(profile);

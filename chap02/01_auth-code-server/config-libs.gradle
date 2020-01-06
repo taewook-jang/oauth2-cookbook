@@ -21,11 +21,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure'
-    //compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.2.2.RELEASE'
-    //implementation 'org.springframework.security.oauth:spring-security-oauth2:2.4.0.RELEASE'
-
-    // spring boot 1.5.x 버전과의 프로퍼티 호환성을 위한 라이브러리. (호환되지 않거나 사용되지 않는 프로퍼티는 콘솔창에 로깅됨)
-    implementation 'org.springframework.boot:spring-boot-properties-migrator'
 
     /*
     ------------------------------

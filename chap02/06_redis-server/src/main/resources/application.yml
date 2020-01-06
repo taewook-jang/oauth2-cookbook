@@ -1,0 +1,8 @@
+server:
+  port: 8206
+
+spring.redis:
+  url: redis://1.217.118.166:6379
+
+
+

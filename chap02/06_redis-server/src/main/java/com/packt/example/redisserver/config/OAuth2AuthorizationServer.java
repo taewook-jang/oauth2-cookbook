@@ -14,8 +14,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2AuthorizationServer extends
-        AuthorizationServerConfigurerAdapter {
+public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -24,12 +23,10 @@ public class OAuth2AuthorizationServer extends
     private RedisConnectionFactory connectionFactory;
 
     @Override
-    public void configure(
-        AuthorizationServerEndpointsConfigurer endpoints)
-        throws Exception {
-        endpoints
-            .authenticationManager(authenticationManager)
-            .tokenStore(tokenStore());
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+
+        endpoints.authenticationManager(authenticationManager)
+                 .tokenStore(tokenStore());
     }
 
     @Bean
@@ -39,13 +36,13 @@ public class OAuth2AuthorizationServer extends
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients)
-            throws Exception {
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+
         clients.inMemory()
-            .withClient("clientapp")
-            .secret("{noop}123456")
-            .authorizedGrantTypes("password", "authorization_code")
-            .scopes("read_profile", "read_contacts");
+               .withClient("clientapp")
+               .secret("{noop}123456")
+               .authorizedGrantTypes("password", "authorization_code")
+               .scopes("read_profile", "read_contacts");
     }
 
 }

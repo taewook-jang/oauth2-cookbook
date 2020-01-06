@@ -16,7 +16,7 @@ public class OAuth2AuthorizationServer extends
         //@formatter:off
         clients.inMemory()
             .withClient("clientadmin")
-            .secret("{noop}123")
+            .secret("{noop}123456")
             .authorizedGrantTypes("client_credentials")
             .scopes("admin");
         //@formatter:on

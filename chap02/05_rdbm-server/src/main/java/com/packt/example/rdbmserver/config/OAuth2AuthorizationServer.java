@@ -62,12 +62,12 @@ public class OAuth2AuthorizationServer extends
         return new BCryptPasswordEncoder(4);
     }
 
-public static void main(String[] args) {
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
-    String clientId = "clientapp";
-    String clientSecret = "dandi";
-    clientSecret = encoder.encode(clientSecret);
-    System.out.println(clientId);
-    System.out.println(clientSecret);
-}
+    public static void main(String[] args) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
+        String clientId = "clientapp";
+        String clientSecret = "dandi";
+        clientSecret = encoder.encode(clientSecret);
+        System.out.println(clientId);
+        System.out.println(clientSecret);
+    }
 }
