@@ -1,2 +1,10 @@
 server:
   port: 8202
+
+spring:
+  profiles:
+    active: ${PROFILE:local}
+    include: log
+
+## [ logging ]
+logging.config: classpath:logback-spring.xml

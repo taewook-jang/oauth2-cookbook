@@ -14,15 +14,4 @@ public class ImplicitServerApplication {
         SpringApplication.run(ImplicitServerApplication.class, args);
     }
 
-    /*@RequestMapping("/callback")
-    public void callbackOnGet(String code, String token_type, OAuth2Payload payload, HttpServletRequest req) {
-        log.info("code :: {}", code);
-        log.info("payload :: {}", payload);
-        log.info("req :: {}", req.getParameterMap());
-    }*/
-
-    /*@GetMapping("/callback")
-    public String callback() {
-        return "callback_page";
-    }*/
 }

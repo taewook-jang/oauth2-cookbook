@@ -16,9 +16,16 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
         clients.inMemory()
             .withClient("clientapp")
             .secret("{noop}123456")
-            .redirectUris("http://localhost:8301/callback")
+            .redirectUris("http://localhost:8201/callback")
             .authorizedGrantTypes("authorization_code")
             .scopes("read_profile", "read_contacts");
+
+        clients.inMemory()
+                .withClient("client8301")
+                .secret("{noop}123456")
+                .redirectUris("http://localhost:8301/callback")
+                .authorizedGrantTypes("authorization_code")
+                .scopes("read_profile", "read_contacts");
         //@formatter:on
     }
 

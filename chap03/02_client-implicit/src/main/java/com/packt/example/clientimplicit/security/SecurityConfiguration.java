@@ -1,4 +1,4 @@
-package com.packt.example.clientauthorizationcode.security;
+package com.packt.example.clientimplicit.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,18 +19,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
         auth.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
         http
             .authorizeRequests().antMatchers("/", "/index.html").permitAll().anyRequest().authenticated().and()
             .formLogin().and()
-            .logout().permitAll();
+            .logout().permitAll().and()
+            .csrf().disable();
+      //@formatter:on
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

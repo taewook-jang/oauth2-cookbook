@@ -1,4 +1,4 @@
-package com.packt.example.clientauthorizationcode.oauth;
+package com.packt.example.clientimplicit.oauth;
 
 import java.util.Arrays;
 
@@ -10,8 +10,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
 import org.springframework.security.oauth2.client.token.ClientTokenServices;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
@@ -26,21 +25,18 @@ public class ClientConfiguration {
     private OAuth2ClientContext oauth2ClientContext;
 
     @Bean
-    public OAuth2ProtectedResourceDetails authorizationCode() {
-
-        AuthorizationCodeResourceDetails resourceDetails = new AuthorizationCodeResourceDetails();
+    public OAuth2ProtectedResourceDetails implicitResourceDetails() {
+        ImplicitResourceDetails resourceDetails = new ImplicitResourceDetails();
 
         //@formatter:off
         resourceDetails.setId("oauth2server");
-        resourceDetails.setTokenName("oauth_token2");
-        resourceDetails.setClientId("client8301");
-        resourceDetails.setClientSecret("123456");
-        resourceDetails.setAccessTokenUri("http://localhost:8201/oauth/token");
-        resourceDetails.setUserAuthorizationUri("http://localhost:8201/oauth/authorize");
+        resourceDetails.setTokenName("oauth_token");
+        resourceDetails.setClientId("client8302");
+        resourceDetails.setUserAuthorizationUri("http://localhost:8202/oauth/authorize");
         resourceDetails.setScope(Arrays.asList("read_profile"));
-        resourceDetails.setPreEstablishedRedirectUri(("http://localhost:8301/callback"));
+        resourceDetails.setPreEstablishedRedirectUri("http://localhost:8302/callback");
         resourceDetails.setUseCurrentUri(false);
-        resourceDetails.setClientAuthenticationScheme(AuthenticationScheme.header);
+        resourceDetails.setClientAuthenticationScheme(AuthenticationScheme.query);
         //@formatter:on
 
         return resourceDetails;
@@ -49,15 +45,16 @@ public class ClientConfiguration {
     @Bean
     public OAuth2RestTemplate oauth2RestTemplate() {
 
-        OAuth2ProtectedResourceDetails resourceDetails = authorizationCode();
+        OAuth2ProtectedResourceDetails resourceDetails = implicitResourceDetails();
 
-        OAuth2RestTemplate template = new OAuth2RestTemplate(resourceDetails, oauth2ClientContext);
+        OAuth2RestTemplate template = new OAuth2RestTemplate(resourceDetails,
+                oauth2ClientContext);
 
-        AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(new AuthorizationCodeAccessTokenProvider()));
+        AccessTokenProviderChain provider = new AccessTokenProviderChain(
+                Arrays.asList(new CustomImplicitAccessTokenProvider()));
 
         provider.setClientTokenServices(clientTokenServices);
         template.setAccessTokenProvider(provider);
-        template.setRetryBadAccessTokens(false);
 
         return template;
     }

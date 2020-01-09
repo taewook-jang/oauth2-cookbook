@@ -1,0 +1,32 @@
+/*
+ ##################################################
+ #
+ # [ MinU-AMS :: ams-commons ] gradle build
+ #
+ ##################################################
+ */
+
+/*
+  ------------------------------
+    config-libs
+  ------------------------------
+*/
+apply from: 'config-libs.gradle'
+
+/*
+  ------------------------------
+    config - querydsl
+  ------------------------------
+*/
+apply from: 'config-querydsl.gradle'
+
+
+/*
+  ------------------------------
+    build - docker image with jib
+  ------------------------------
+*/
+bootJar {
+    archivesBaseName = 'arms-acl'
+    archiveVersion =  ARMS_ACCESS_CONTROL_VERSION
+}

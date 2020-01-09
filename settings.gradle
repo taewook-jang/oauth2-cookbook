@@ -8,4 +8,5 @@ include 'chap01:client-implicit',
         'chap02:05_rdbm-server',
         'chap02:06_redis-server',
         'chap02:07_oauth2provider',
-        'chap03:01_client-auth-code'
+        'chap03:01_client-auth-code',
+        'chap03:02_client-implicit'

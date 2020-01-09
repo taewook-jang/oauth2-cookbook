@@ -22,6 +22,14 @@ public class OAuth2AuthorizationServer extends
             .accessTokenValiditySeconds(120)
             .scopes("read_profile", "read_contacts");
       //@formatter:on
+
+        clients.inMemory()
+                .withClient("client8302")
+                .secret("{noop}123456")
+                .redirectUris("http://localhost:8302/callback")
+                .authorizedGrantTypes("implicit")
+                .accessTokenValiditySeconds(120)
+                .scopes("read_profile", "read_contacts");
     }
 
 }
