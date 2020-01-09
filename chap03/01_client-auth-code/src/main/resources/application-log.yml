@@ -1,0 +1,20 @@
+# ========================================
+#
+# [ams-ingest-dataflow] props :: log
+#
+# ========================================
+
+# ALL > TRACE > DEBUG > INFO > WARN > ERROR > OFF
+logging:
+
+  group:
+    app: com.packt.example
+    spring: org.springframework
+    spring-web: org.springframework.web
+    spring-security: org.springframework.security
+
+  level:
+    app: info
+    spring: info
+    spring-web: info
+    spring-security: info

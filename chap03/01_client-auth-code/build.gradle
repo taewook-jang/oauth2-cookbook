@@ -20,6 +20,7 @@ apply from: 'config-libs.gradle'
 */
 apply from: 'config-querydsl.gradle'
 
+
 /*
   ------------------------------
     build - docker image with jib

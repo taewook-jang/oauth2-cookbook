@@ -50,6 +50,7 @@ allprojects {
     apply plugin: 'com.ewerk.gradle.plugins.querydsl'
     apply plugin: 'org.asciidoctor.convert'
     apply plugin: "com.google.cloud.tools.jib"
+    apply plugin: 'project-report'
 
     /*
       ------------------------------
@@ -122,14 +123,12 @@ allprojects {
     processResources {
         with copySpec {
             from 'src/main/resources'
-            include '**/banner.txt', '**/application.yml'
+            include '**/banner.txt', '**/application.yml', '**/docker/Dockerfile'
             filteringCharset = 'UTF-8'
-            project.properties.findAll().each {
-                prop ->
-                    if (prop.value != null) {
-                        filter(ReplaceTokens, tokens: [(prop.key): prop.value])
-                        filter(ReplaceTokens, tokens: [ ('project.' + prop.key): prop.value])
-                    }
+            project.properties.findAll {
+                if (it.value != null && it.value instanceof String) {
+                    filter(ReplaceTokens, tokens: [(it.key): it.value])
+                }
             }
         }
     }
